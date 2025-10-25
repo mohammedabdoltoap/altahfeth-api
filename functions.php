@@ -179,3 +179,44 @@ function update($conn, $table, $data, $conditions) {
         
         }
 }
+
+function delete($conn, $table, $where) {
+    // تحضير شروط الحذف
+    $conditions = [];
+    foreach ($where as $key => $value) {
+        $conditions[] = "$key = :$key";
+    }
+    $whereClause = implode(" AND ", $conditions);
+
+    $sql = "DELETE FROM $table WHERE $whereClause";
+
+    try {
+        $stmt = $conn->prepare($sql);
+
+        // ربط القيم بالعلامات
+        foreach ($where as $key => $value) {
+            $stmt->bindValue(":$key", $value);
+        }
+
+        $stmt->execute();
+        $count = $stmt->rowCount();
+
+        if ($count > 0) {
+            echo json_encode([
+                "stat" => "ok",
+                "data" => $count
+            ]);
+        } else {
+            echo json_encode([
+                "stat" => "no",
+                "data" => 0
+            ]);
+        }
+
+    } catch(PDOException $e) {
+        echo json_encode([
+            "stat" => "error",
+            "msg" => "حدث خطأ أثناء تنفيذ الاستعلام: " . $e->getMessage()
+        ]);
+    }
+}

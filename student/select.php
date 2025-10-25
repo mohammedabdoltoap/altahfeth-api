@@ -20,18 +20,20 @@ switch($_GET['mark'])
     break;
     case "select_data_student":select_data_student();
     break;
-    // case "select_report_students":select_report_students();
-    // break;
     case "select_absence_report":select_absence_report();
     break;
    case "select_review_report":select_review_report();
     break;
     case "select_daily_report":select_daily_report();
     break;
-
-
     case "select_reders":select_reders();
     break;
+    case "select_skill":select($con,"skill");
+    break;
+    case "select_student_skill":select_student_skill();
+    break;
+
+
 }
 
 function select_levels(){
@@ -365,8 +367,34 @@ $id_student = $data['id_student'];
     }
 }
 
+function select_student_skill(){
 
-
+    global $con;
+    try{
+    $data = json_decode(file_get_contents("php://input"), true);
+    $stm=$con->prepare("select student_skill.*,skill.* 
+    from student_skill
+    join  skill on skill.id_skill=student_skill.id_skill
+    where student_skill.id_student=? 
+    ");
+    $stm->execute([$data["id_student"]]);
+    $skill=$stm->fetchAll(PDO::FETCH_ASSOC);
+    if($skill){
+        echo json_encode([
+            "stat" => "ok",
+            "data" => $skill,
+        ]);
+    } else {
+        echo json_encode([
+            "stat" => "no",
+        ]);
+    }}catch(Exception $e){
+        echo json_encode([
+            "stat" => "erorr",
+            "msg" => $e->getMessage(),
+        ]);
+}
+}
 
 
 

@@ -10,6 +10,8 @@ switch($_GET['mark'])
     break;
     case "insertAttendance":insertAttendance();
     break;
+    case "insert_student_skills":insert_student_skills();
+    break;
 
 }
 function insertStudents(){
@@ -22,7 +24,6 @@ function insertStudents(){
         "students",
         array(
             "name_student" => $data['name_student'],
-            "age_student" => $data['age_student'],
             "address_student" => $data['address_student'],
             "surname"=>$data['surname'],
             "place_of_birth"=>$data['place_of_birth'],
@@ -84,7 +85,23 @@ function insertAttendance(){
 }
 
 
+function insert_student_skills(){
 
+    global $con;
+
+    // قراءة البيانات من JSON المرسل
+    $data = json_decode(file_get_contents("php://input"), true);
+    insert(
+        $con,
+        "student_skill",
+        array(
+            "id_student" => $data['id_student'],
+            "id_skill"=>$data['id_skill'],
+            "avaluation"=>$data['avaluation'],
+            )
+    );
+ 
+}
 
 
 

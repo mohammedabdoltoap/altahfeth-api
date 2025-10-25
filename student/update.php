@@ -9,6 +9,8 @@ switch($_GET['mark'])
     break;
     case "update_Student":update_Student();
     break;
+    case "update_student_skill":update_student_skill();
+    break;
 
 }
 
@@ -89,3 +91,16 @@ function update_Student(){
     
 
 }
+
+function update_student_skill(){
+    global $con;
+    $data = json_decode(file_get_contents("php://input"), true);
+
+    update($con, "student_skill", [
+        "avaluation" => $data["avaluation"],
+    ], [
+        "id" => $data["id"]
+    ]);
+
+   
+    }
