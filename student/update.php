@@ -62,7 +62,7 @@ function update_Student(){
     $data = json_decode(file_get_contents("php://input"), true);
     update($con, "students", [
         "name_student" => $data["name_student"],
-       "age_student" => $data["age_student"],
+     
        "address_student" => $data["address_student"],
        "surname"=>$data["surname"],
        "place_of_birth"=>$data["place_of_birth"],
