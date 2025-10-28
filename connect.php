@@ -3,7 +3,7 @@
 // header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 // header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
-$dsn = "mysql:host=localhost;dbname=alt";
+$dsn = "mysql:host=localhost;dbname=alt2";
 $user ="root";
 $pass = "";
 $option=array(

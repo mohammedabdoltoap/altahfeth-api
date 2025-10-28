@@ -67,7 +67,7 @@ function addResignation(){
           // تحضير البيانات للإدخال
           $resignationData = array(
               "id_user"=>$data["id_user"], 
-              "statuse"=>1
+             
           );
           
           // إضافة الحقول الاختيارية إذا كانت موجودة
